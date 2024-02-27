@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import utils.funcs_2d as f2d
+from matplotlib.colors import Normalize
+import utils.funcs_3d as dim_funcs
 
 
 if __name__ == "__main__":
@@ -24,19 +25,28 @@ if __name__ == "__main__":
     #simulation run time
     T = 2
 
+    #how many lines to show?
+    number_of_lines = 10
+
     # run simulation. We do it twice to make sure we store a good range of values
     # not knowing in advance what the touchdown time will be
     print(f"\ncomputing solution for C = {C}... \n")
-    h_sol = f2d.lub_soln_2d(h_init, T, C)
+    h_sol = dim_funcs.lub_soln(h_init, T, C)
     touchdown_time = h_sol.t[-1]
-    h_sol = f2d.lub_soln_2d(h_init, touchdown_time, C)
+    h_sol = dim_funcs.lub_soln(h_init, touchdown_time, C, num_sol=number_of_lines)
     h_solutions = h_sol.y.transpose()
     print("\nsolution found \n")
 
     # plot solution
     print("\nPlotting... \n")
 
+    ##colourmap
+    cmap = plt.get_cmap('viridis')
+    norm = Normalize(vmin=0, vmax=number_of_lines)
+
+    #plot
     fig, ax = plt.subplots()
     for i,hs in enumerate(h_solutions):
-        ax.plot(x, np.append(hs, 1))
+        colour = cmap(norm(i))
+        ax.plot(x, np.append(hs, 1), color=colour)
     plt.show()

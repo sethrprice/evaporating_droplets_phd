@@ -9,7 +9,7 @@ fds = {'p1': [0,1,1,0,0],
        'd3-': [0,1,-3,3,-1]}
 
 
-def lub_g_2d(h, plus):
+def lub_g(h, plus):
 
     '''this finds 2D g, part of the 2D lubrication equation'''
 
@@ -28,7 +28,6 @@ def lub_g_2d(h, plus):
         pm = fds['m1']
 
     # add boundary conditions for h
-    # think these need to be numpy array operations bcos of np.linspace
     h = np.insert(h, 0, [h[2], h[1]]) #symmetry across centre
     h = np.append(h, [1, 3 - 3*h[-1] + h[-2]]) #pinned contact line and symmetry
 
@@ -38,13 +37,13 @@ def lub_g_2d(h, plus):
     return g
 
 
-def lub_eq_2d(t, h, C):
+def lub_eq(t, h, C):
 
     '''The lubrication equation in 2D for a droplet in a well'''
 
     dx = 1/len(h)
 
-    dhdt = -1 - C/3 * 1/dx * (lub_g_2d(h, True) - lub_g_2d(h, False))
+    dhdt = -1 - C/3 * 1/dx * (lub_g(h, True) - lub_g(h, False))
 
     return dhdt
 
@@ -58,15 +57,13 @@ def touch_floor(t, h, C):
     else:
         return 1
 
-    return min(h)
-
 touch_floor.terminal = True
 
-def lub_soln_2d(h0, t, C, solver='LSODA'):
+def lub_soln(h0, t, C, solver='LSODA', num_sol = 10):
 
     '''Use solve_ivp to solve the lubrication equation on a two dimensional domain'''
 
-    sol = solve_ivp(lub_eq_2d, [0,t], h0, args = (C,), method=solver, events=touch_floor, t_eval=np.linspace(0,t,10))
+    sol = solve_ivp(lub_eq, [0,t], h0, args = (C,), method=solver, events=touch_floor, t_eval=np.linspace(0,t,num_sol))
 
     return sol
 
