@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.colors import Normalize
+import matplotlib.colors as mcols
 import utils.funcs_3d as dim_funcs
 
 
@@ -42,7 +42,7 @@ if __name__ == "__main__":
 
     ##colourmap
     cmap = plt.get_cmap('viridis')
-    norm = Normalize(vmin=0, vmax=number_of_lines)
+    norm = mcols.Normalize(vmin=0, vmax=number_of_lines)
 
     #plot
     fig, ax = plt.subplots()
