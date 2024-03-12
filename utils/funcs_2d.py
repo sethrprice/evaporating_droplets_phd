@@ -1,5 +1,8 @@
 import numpy as np
 from scipy.integrate import solve_ivp
+import functools
+
+np.convolve = functools.partial(np.convolve, mode = 'valid')
 
 # finite differences are computed using a convolution with a gaussian kernel
 # these are the kernels corresponding to certain finite differences (fds)
@@ -32,7 +35,7 @@ def lub_g(h, plus):
     h = np.append(h, [1, 3 - 3*h[-1] + h[-2]]) #pinned contact line and symmetry
 
     # compute g
-    g = (np.convolve(h, pm, 'valid')/(2*dx))**3 * np.convolve(h, d3, 'valid')
+    g = (np.convolve(h, pm)/(2*dx))**3 * np.convolve(h, d3)
 
     return g
 

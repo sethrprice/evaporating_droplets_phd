@@ -10,29 +10,29 @@ if __name__ == "__main__":
 
     # set parameters
 
-    #C param
-    C = 1
+    # C param
+    C = 2
 
-    #domain paramaters
-    N = 128
+    # domain paramaters
+    N = 2**6
     dx = 1/N
     x = [dx*i for i in range(N+1)]
 
-    #initial condition
+    # initial condition
     a = .5
     h_init = [1 + a * (1 - (dx*i)**2) for i in range(N)]
 
-    #simulation run time
+    # simulation run time
     T = 2
 
-    #how many lines to show?
+    # how many lines to show?
     number_of_lines = 10
 
     # run simulation. We do it twice to make sure we store a good range of values
     # not knowing in advance what the touchdown time will be
     print(f"\ncomputing solution for C = {C}... \n")
     h_sol = dim_funcs.lub_soln(h_init, T, C)
-    touchdown_time = h_sol.t[-1]
+    touchdown_time = h_sol.t_events[0][0]
     h_sol = dim_funcs.lub_soln(h_init, touchdown_time, C, num_sol=number_of_lines)
     h_solutions = h_sol.y.transpose()
     print("\nsolution found \n")
@@ -40,11 +40,11 @@ if __name__ == "__main__":
     # plot solution
     print("\nPlotting... \n")
 
-    ##colourmap
+    # colourmap
     cmap = plt.get_cmap('viridis')
     norm = mcols.Normalize(vmin=0, vmax=number_of_lines)
 
-    #plot
+    # plot
     fig, ax = plt.subplots()
     for i,hs in enumerate(h_solutions):
         colour = cmap(norm(i))
