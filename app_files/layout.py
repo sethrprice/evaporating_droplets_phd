@@ -13,7 +13,7 @@ simulation_tab = dcc.Tab(label='Main', value='sim_tab', children=[
                 html.H3('Evaporating Droplet Simulation', style={'textAlign': 'center'}),
                 html.Div([dcc.Graph(id='simulation-graph')]),
                 html.Div([
-                    html.Label('Control Panel:', style={'margin-top': '20px', 'font-weight': 'bold'}),
+                    html.Label('Control Panel: ', style={'margin-top': '20px', 'font-weight': 'bold'}),
                     dcc.Input(
                         id='C_input',
                         type="number",

@@ -72,6 +72,19 @@ def get_callbacks(app):
             # https://plotly.com/python/line-charts/
             fig = px.line(df, x='r', y='h', color='t',
                           color_discrete_map=colour_map)
+
+            fig.update_layout(xaxis = {'showline':False,
+                                       'showgrid':False,
+                                       'showticklabels':True,
+                                       'linecolor' :'black'},
+                              yaxis = {'showline':True,
+                                       'showgrid':False,
+                                       'showticklabels':True,
+                                       'linecolor' :'black'},
+                              plot_bgcolor = 'white')
+
+            fig.add_trace(go.Scatter(x = [1, 1], y = [0, 1], mode = 'lines', line={'color':'black', 'width':5}, showlegend=False))
+            fig.add_trace(go.Scatter(x=[0, 1], y=[0, 0], mode='lines', line={'color': 'black', 'width':2}, showlegend=False))
             return fig
 
         else:
