@@ -12,6 +12,8 @@ import utils.funcs_2d as funcs_2d
 def get_callbacks(app):
 
 
+
+
     @app.callback(
         Output('simulation-graph', 'figure'),
         Input('go_button', 'n_clicks'),
@@ -20,7 +22,7 @@ def get_callbacks(app):
         State('a_input', 'value'),
         State('lines_input', 'value'),
         State('choose_geometry', 'value'),
-        prevent_initial_call=True
+        prevent_initial_call=False
     )
     def simulate_evaporation(nclicks, CC, NN, aa, n_lines, geom):
         if nclicks > 0:
@@ -72,6 +74,20 @@ def get_callbacks(app):
             # https://plotly.com/python/line-charts/
             fig = px.line(df, x='r', y='h', color='t',
                           color_discrete_map=colour_map)
+            
+            fig.update_layout(xaxis = {'showline':False,
+                                       'showgrid':False,
+                                       'showticklabels':True,
+                                       'linecolor' :'black'},
+                              yaxis = {'showline':True,
+                                       'showgrid':False,
+                                       'showticklabels':True,
+                                       'linecolor' :'black'},
+                              plot_bgcolor = 'white')
+ 
+            fig.add_trace(go.Scatter(x = [1, 1], y = [0, 1], mode = 'lines', line={'color':'black', 'width':5}, showlegend=False))
+            fig.add_trace(go.Scatter(x=[0, 1], y=[0, 0], mode='lines', line={'color': 'black', 'width':2}, showlegend=False))
+
 
             fig.update_layout(xaxis = {'showline':False,
                                        'showgrid':False,
@@ -89,7 +105,35 @@ def get_callbacks(app):
 
         else:
             # If the button has not been clicked, return an empty graph
-            return {
-                'data': [],
-                'layout': {}
-            }
+            
+            NN = 200
+            dr = 1/NN
+
+            d_init = {'r':[i * dr for i in range(NN + 1)], 
+                      'h':[1 + 0.5 * (1 - (dr * i)**2) for i in range(NN + 1)], 
+                      't':[0 for i in range(NN + 1)]}
+            
+            df = pd.DataFrame(d_init)
+
+            # colourmap
+            colour_map = {0: 'blue'}
+
+            empty_fig = px.line(df, 
+                                x='r', y='h', color='t', 
+                                color_discrete_map=colour_map)
+            
+            empty_fig.update_layout(
+                xaxis = {'showline':False,
+                         'showgrid':False,
+                         'showticklabels':True,
+                         'linecolor' :'black'},
+                yaxis = {'showline':True,
+                         'showgrid':False,
+                         'showticklabels':True,
+                         'linecolor' :'black'},
+                plot_bgcolor = 'white')
+ 
+            empty_fig.add_trace(go.Scatter(x = [1, 1], y = [0, 1], mode = 'lines', line={'color':'black', 'width':5}, showlegend=False))
+            empty_fig.add_trace(go.Scatter(x=[0, 1], y=[0, 0], mode='lines', line={'color': 'black', 'width':2}, showlegend=False))
+
+            return empty_fig
