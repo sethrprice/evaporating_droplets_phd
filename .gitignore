@@ -1,4 +1,7 @@
 venv12/
+venv12
+venv*/
+venv*
 __pycache__/
 .vscode/
 *.pyc
