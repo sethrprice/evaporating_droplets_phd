@@ -1,6 +1,5 @@
-from dash import html
-from dash import dcc
 import dash_bootstrap_components as dbc
+from dash import dcc
 
 
 C_input = dbc.Input(
@@ -19,12 +18,14 @@ N_input = dbc.Input(
     placeholder="number of points"
 )
 
-a_input = dbc.Input(
+a_input = dcc.Slider(
     id='a_input',
-    type='number',
     min=1,
     max=3,
-    placeholder="centre height of droplet"
+    step = 0.1, 
+    value = 1.5, 
+    marks={1:'1', 1.5:'1.5', 2:'2', 2.5:'2.5', 3:'3'}, 
+    tooltip={"placement": "bottom", "always_visible": True}
 )
 
 n_lines_input = dbc.Input(

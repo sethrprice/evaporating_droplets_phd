@@ -1,4 +1,5 @@
-from dash import Input, Output, State, callback
+from functools import cache
+from dash import Input, Output, State
 import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
@@ -24,6 +25,7 @@ def get_callbacks(app):
         State('choose_geometry', 'value'),
         prevent_initial_call=False
     )
+    @cache
     def simulate_evaporation(nclicks, CC, NN, aa, n_lines, geom):
         if nclicks > 0:
 
@@ -110,7 +112,7 @@ def get_callbacks(app):
             dr = 1/NN
 
             d_init = {'r':[i * dr for i in range(NN + 1)], 
-                      'h':[1 + 0.5 * (1 - (dr * i)**2) for i in range(NN + 1)], 
+                      'h':[1 + (aa - 1)* (1 - (dr * i)**2) for i in range(NN + 1)], 
                       't':[0 for i in range(NN + 1)]}
             
             df = pd.DataFrame(d_init)

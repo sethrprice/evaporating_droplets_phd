@@ -1,7 +1,7 @@
 from dash import html
 from dash import dcc
 import dash_bootstrap_components as dbc
-from .layout_components import *
+from .layout_components import C_input, N_input, a_input, n_lines_input, geometry, go_button
 
 #https://dash-bootstrap-components.opensource.faculty.ai/
 
@@ -22,11 +22,18 @@ intro_tab = dcc.Tab(label='Introduction', value='intro_tab', children=[
 
 controls = dbc.Card([
     html.Div([
+        html.Br(),
         C_input,
+        html.Br(),
         N_input,
+        html.Br(),
+        html.P("select height at centre"),
         a_input,
+        html.Br(),
         n_lines_input,
+        html.Br(),
         geometry,
+        html.Br(),
         go_button
     ])
 ])
