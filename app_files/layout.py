@@ -5,13 +5,12 @@ from .layout_components import C_input, N_input, a_input, n_lines_input, geometr
 
 #https://dash-bootstrap-components.opensource.faculty.ai/
 
-introduction = "In January of 2023 I passed my PhD viva. A year later I finally felt recovered enough from the process " \
-               "to revisit the project, and I decided to create a small simulation app so that other people could run " \
-               "the same simulations I did. I have moved the model from Mathematica to Python in an effort to be more " \
-               "reproducible and open source, and have used Dash to create a user-friendly app that lets users build and" \
-               "run simulations of evaporating droplets.\n It's not finished yet, it currently only runs pure droplet" \
-               "simulations and isn't very scalable to large values of N. I plan to add Marangoni effects, a vapour phase" \
-               "model, and to improve the simulation algorithm."
+introduction = "In January of 2023 I passed my PhD viva. A year later I revisited the project, and I decided to create a small " \
+                "simulation app so that other people could run the same simulations I did. I have moved the model from Mathematica to Python in an effort to be more " \
+                "reproducible and open source, and have used Dash to create a user-friendly app that lets users build and" \
+                "run simulations of evaporating droplets.\n It's not finished yet, it currently only runs pure droplet" \
+                "simulations and isn't very scalable to large values of N. I plan to add Marangoni effects, a vapour phase" \
+                "model, and to improve the simulation algorithm."
 
 intro_tab = dcc.Tab(label='Introduction', value='intro_tab', children=[
             html.Div([
